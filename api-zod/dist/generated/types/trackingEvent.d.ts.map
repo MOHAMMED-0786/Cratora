@@ -1,0 +1,1 @@
+{"version":3,"file":"trackingEvent.d.ts","sourceRoot":"","sources":["../../../src/generated/types/trackingEvent.ts"],"names":[],"mappings":"AAAA;;;;;;GAMG;AAEH,MAAM,WAAW,aAAa;IAC5B,KAAK,EAAE,MAAM,CAAC;IACd,gBAAgB;IAChB,SAAS,EAAE,MAAM,GAAG,IAAI,CAAC;IACzB,MAAM,EAAE,OAAO,CAAC;IAChB,QAAQ,CAAC,EAAE,OAAO,CAAC;CACpB"}

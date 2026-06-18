@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Craftora — Made by Hands. Made with Heart.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" />
+<style>
+/* ── TOKENS ── */
+:root {
+  --orange: #E07B2A;
+  --orange-dark: #C4661A;
+  --orange-light: #FDF0E3;
+  --orange-mid: #F5A652;
+  --cream: #FAF6F1;
+  --cream-dark: #F0EAE0;
+  --brown: #3D1F0A;
+  --brown-mid: #7A4020;
+  --text: #1A1A1A;
+  --text-2: #555555;
+  --text-3: #888888;
+  --border: #E8E0D5;
+  --white: #FFFFFF;
+  --green: #27AE60;
+  --red: #E74C3C;
+  --blue: #2980B9;
+  --radius: 16px;
+  --radius-sm: 10px;
+  --radius-xs: 6px;
+  --shadow: 0 2px 12px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.14);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: #1A1208; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
+
+/* ── PHONE SHELL ── */
+.phone { width: 390px; height: 844px; background: var(--cream); border-radius: 44px; overflow: hidden; position: relative; box-shadow: 0 30px 80px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.1); }
+.screen { display: none; flex-direction: column; height: 100%; overflow-y: auto; overflow-x: hidden; scrollbar-width: none; }
+.screen::-webkit-scrollbar { display: none; }
+.screen.active { display: flex; }
+
+/* ── NAV BAR (desktop tabs) ── */
+.desktop-nav { position: fixed; top: 24px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; background: rgba(255,255,255,0.12); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.15); border-radius: 40px; padding: 6px; z-index: 100; }
+.desktop-nav button { background: transparent; border: none; color: rgba(255,255,255,0.7); font-size: 12px; font-weight: 500; padding: 7px 14px; border-radius: 30px; cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.2s; white-space: nowrap; }
+.desktop-nav button.active { background: var(--orange); color: white; }
+.desktop-nav button:hover:not(.active) { background: rgba(255,255,255,0.15); color: white; }
+
+/* ── BOTTOM NAV ── */
+.bottom-nav { display: flex; border-top: 1px solid var(--border); background: var(--white); padding: 8px 0 20px; flex-shrink: 0; }
+.bnav { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; cursor: pointer; border: none; background: transparent; padding: 6px 4px; }
+.bnav i { font-size: 22px; color: #AAA; }
+.bnav span { font-size: 10px; color: #AAA; font-weight: 500; }
+.bnav.active i, .bnav.active span { color: var(--orange); }
+.bnav-cart { width: 52px; height: 52px; border-radius: 50%; background: var(--orange); display: flex; align-items: center; justify-content: center; margin-top: -20px; box-shadow: 0 4px 16px rgba(224,123,42,0.4); cursor: pointer; border: none; flex-shrink: 0; }
+.bnav-cart i { font-size: 22px; color: white; }
+
+/* ── COMMON ── */
+.badge-orange { display: inline-flex; align-items: center; gap: 4px; background: var(--orange-light); color: var(--orange); font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 20px; }
+.badge-green { background: #E8F8EE; color: var(--green); font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 20px; display: inline-block; }
+.badge-blue { background: #E3F0F9; color: var(--blue); font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 20px; display: inline-block; }
+.badge-red { background: #FDECEA; color: var(--red); font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 20px; display: inline-block; }
+.btn-primary { background: var(--orange); color: white; border: none; border-radius: var(--radius-sm); padding: 14px 24px; font-size: 15px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background 0.2s; }
+.btn-primary:hover { background: var(--orange-dark); }
+.btn-outline { background: transparent; color: var(--text); border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 13px 24px; font-size: 15px; font-weight: 500; cursor: pointer; font-family: 'Inter', sans-serif; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.star { color: #F5A623; }
+.divider { height: 1px; background: var(--border); margin: 0 20px; }
+.section-hdr { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px 10px; }
+.section-hdr h3 { font-size: 16px; font-weight: 700; color: var(--text); }
+.section-hdr a { font-size: 13px; color: var(--orange); font-weight: 600; cursor: pointer; }
+.tag-row { display: flex; gap: 8px; padding: 0 20px 14px; overflow-x: auto; scrollbar-width: none; }
+.tag-row::-webkit-scrollbar { display: none; }
+.tag { padding: 7px 16px; border-radius: 20px; font-size: 13px; font-weight: 500; cursor: pointer; white-space: nowrap; border: 1.5px solid var(--border); color: var(--text-2); background: var(--white); }
+.tag.active { background: var(--orange); color: white; border-color: var(--orange); }
+.back-btn { width: 36px; height: 36px; border-radius: 50%; background: var(--white); border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: var(--shadow); }
+.back-btn i { font-size: 18px; color: var(--text); }
+
+/* ════════════════════════════════════
+   SCREEN 1 — SPLASH
+═══════════════════════════════════════ */
+#s-splash { background: var(--cream); }
+.splash-header { padding: 60px 28px 24px; display: flex; flex-direction: column; align-items: center; }
+.splash-logo-icon { width: 64px; height: 64px; background: var(--orange); border-radius: 18px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
+.splash-logo-icon i { font-size: 32px; color: white; }
+.splash-logo-name { font-size: 28px; font-weight: 700; color: var(--orange); letter-spacing: -0.5px; }
+.splash-hero-img { width: calc(100% - 48px); margin: 0 24px; border-radius: 20px; height: 220px; object-fit: cover; background: linear-gradient(135deg, #8B4513 0%, #D2691E 40%, #F4A460 70%, #A0522D 100%); display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; flex-shrink: 0; }
+.splash-hero-img::before { content: ''; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='390' height='220'%3E%3Crect fill='%23C4762A' width='390' height='220'/%3E%3Cellipse cx='100' cy='160' rx='60' ry='50' fill='%23A0522D' opacity='.6'/%3E%3Cellipse cx='200' cy='140' rx='55' ry='45' fill='%238B4513' opacity='.7'/%3E%3Crect x='60' y='120' width='120' height='80' rx='4' fill='%23556B2F' opacity='.8'/%3E%3Cellipse cx='195' cy='175' rx='48' ry='35' fill='%23D2691E'/%3E%3Cellipse cx='195' cy='162' rx='42' ry='30' fill='%23C4661A'/%3E%3C/svg%3E"); background-size: cover; }
+.splash-headline { padding: 24px 28px 6px; }
+.splash-headline h1 { font-size: 26px; font-weight: 800; color: var(--text); line-height: 1.2; letter-spacing: -0.5px; }
+.splash-sub { padding: 8px 28px 28px; font-size: 14px; color: var(--text-2); line-height: 1.6; }
+.splash-actions { padding: 0 24px 40px; display: flex; flex-direction: column; gap: 10px; margin-top: auto; }
+
+/* ════════════════════════════════════
+   SCREEN 2 — AUTH
+═══════════════════════════════════════ */
+#s-auth { background: var(--white); }
+.auth-top { padding: 60px 24px 24px; display: flex; flex-direction: column; align-items: center; }
+.auth-logo-icon { width: 50px; height: 50px; background: var(--orange-light); border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+.auth-logo-icon i { font-size: 24px; color: var(--orange); }
+.auth-top h2 { font-size: 24px; font-weight: 800; color: var(--text); margin-bottom: 6px; }
+.auth-top p { font-size: 14px; color: var(--text-2); text-align: center; line-height: 1.5; }
+.role-tabs { display: flex; margin: 20px 24px 0; border-bottom: 2px solid var(--border); }
+.role-tab { flex: 1; padding: 12px; text-align: center; font-size: 15px; font-weight: 600; color: var(--text-3); cursor: pointer; border-bottom: 2.5px solid transparent; margin-bottom: -2px; }
+.role-tab.active { color: var(--orange); border-bottom-color: var(--orange); }
+.auth-form { padding: 20px 24px; }
+.form-label { font-size: 11px; font-weight: 700; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; display: block; }
+.method-toggle { display: flex; background: var(--cream); border-radius: var(--radius-sm); padding: 4px; margin-bottom: 18px; }
+.method-btn { flex: 1; padding: 9px; text-align: center; font-size: 14px; font-weight: 500; cursor: pointer; border-radius: 8px; color: var(--text-2); }
+.method-btn.active { background: var(--white); color: var(--text); font-weight: 600; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+.input-group { display: flex; align-items: center; gap: 10px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 13px 16px; margin-bottom: 16px; background: var(--white); }
+.input-group i { font-size: 18px; color: var(--text-3); flex-shrink: 0; }
+.input-group input { border: none; outline: none; font-size: 15px; color: var(--text); font-family: 'Inter', sans-serif; flex: 1; background: transparent; }
+.input-group input::placeholder { color: var(--text-3); }
+.auth-divider { display: flex; align-items: center; gap: 12px; margin: 18px 0; color: var(--text-3); font-size: 13px; }
+.auth-divider::before, .auth-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.social-row { display: flex; gap: 12px; }
+.social-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 12px; cursor: pointer; font-size: 14px; font-weight: 500; background: var(--white); color: var(--text); }
+.auth-footer { text-align: center; padding: 16px 24px 30px; font-size: 13px; color: var(--text-3); }
+.auth-footer a { color: var(--orange); font-weight: 600; cursor: pointer; }
+.auth-terms { text-align: center; font-size: 11px; color: var(--text-3); padding: 0 24px 20px; line-height: 1.6; }
+.auth-terms a { color: var(--orange); }
+
+/* ════════════════════════════════════
+   SCREEN 3 — HOME (BUYER)
+═══════════════════════════════════════ */
+#s-home { background: var(--cream); }
+.home-topbar { display: flex; align-items: center; justify-content: space-between; padding: 52px 20px 14px; background: var(--white); }
+.location-row { display: flex; align-items: center; gap: 5px; cursor: pointer; }
+.location-row span { font-size: 11px; color: var(--text-3); font-weight: 500; }
+.location-row h3 { font-size: 15px; font-weight: 700; color: var(--text); display: flex; align-items: center; gap: 3px; }
+.notif-btn { width: 38px; height: 38px; border-radius: 50%; border: 1.5px solid var(--border); background: var(--white); display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.home-search { display: flex; align-items: center; gap: 8px; margin: 12px 20px; background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 11px 16px; }
+.home-search i { font-size: 18px; color: var(--text-3); }
+.home-search input { border: none; outline: none; font-size: 14px; color: var(--text); font-family: 'Inter', sans-serif; flex: 1; background: transparent; }
+.filter-btn { width: 36px; height: 36px; background: var(--orange); border-radius: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; }
+.filter-btn i { font-size: 17px; color: white; }
+.near-grid { display: flex; gap: 12px; padding: 0 20px 16px; overflow-x: auto; scrollbar-width: none; }
+.near-grid::-webkit-scrollbar { display: none; }
+.near-card { width: 160px; flex-shrink: 0; background: var(--white); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); cursor: pointer; }
+.near-card-img { height: 110px; position: relative; overflow: hidden; }
+.near-card-img-bg { width: 100%; height: 100%; object-fit: cover; }
+.near-card-rating { position: absolute; top: 8px; right: 8px; background: white; border-radius: 8px; padding: 3px 7px; font-size: 12px; font-weight: 700; display: flex; align-items: center; gap: 3px; box-shadow: var(--shadow); }
+.near-card-body { padding: 10px 12px; }
+.near-card-body h4 { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+.near-card-body .price { font-size: 14px; font-weight: 700; color: var(--orange); float: right; margin-top: -18px; }
+.near-card-body .meta { font-size: 11px; color: var(--text-3); display: flex; align-items: center; gap: 4px; margin-top: 4px; }
+.rated-list { padding: 0 20px; display: flex; flex-direction: column; gap: 10px; }
+.rated-item { display: flex; align-items: center; gap: 12px; background: var(--white); border-radius: var(--radius); padding: 12px; box-shadow: var(--shadow); cursor: pointer; }
+.rated-img { width: 56px; height: 56px; border-radius: var(--radius-sm); object-fit: cover; flex-shrink: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+.rated-info { flex: 1; }
+.rated-info h4 { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+.rated-info .sub { font-size: 12px; color: var(--text-3); margin-bottom: 4px; }
+.rated-info .stars { font-size: 12px; color: var(--text-3); display: flex; align-items: center; gap: 3px; }
+.rated-price { font-size: 15px; font-weight: 700; color: var(--orange); }
+.heart-btn { background: none; border: none; cursor: pointer; padding: 4px; }
+.heart-btn i { font-size: 18px; color: #CCC; }
+
+/* ════════════════════════════════════
+   SCREEN 4 — PRODUCT DETAIL
+═══════════════════════════════════════ */
+#s-product { background: var(--white); }
+.product-hero { height: 260px; background: #F5E6D0; position: relative; display: flex; align-items: center; justify-content: center; font-size: 80px; flex-shrink: 0; }
+.product-actions-top { position: absolute; top: 52px; left: 16px; right: 16px; display: flex; justify-content: space-between; }
+.product-dots { position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%); display: flex; gap: 5px; }
+.dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(0,0,0,0.2); }
+.dot.active { width: 18px; border-radius: 3px; background: var(--orange); }
+.product-body { padding: 20px; flex: 1; overflow-y: auto; }
+.product-body h2 { font-size: 20px; font-weight: 800; color: var(--text); margin-bottom: 4px; }
+.product-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+.product-price { font-size: 22px; font-weight: 800; color: var(--orange); }
+.process-card { background: var(--orange-light); border-radius: var(--radius-sm); padding: 14px; margin-bottom: 16px; }
+.process-card .proc-title { font-size: 13px; font-weight: 700; color: var(--orange); display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
+.process-card p { font-size: 13px; color: var(--brown-mid); line-height: 1.6; font-style: italic; }
+.ing-title { font-size: 14px; font-weight: 700; margin-bottom: 10px; color: var(--text); }
+.ing-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.ing-chip { background: var(--cream); border-radius: 8px; padding: 6px 12px; font-size: 13px; color: var(--text-2); font-weight: 500; }
+.seller-mini-row { display: flex; align-items: center; gap: 10px; padding: 12px; background: var(--cream); border-radius: var(--radius-sm); margin-bottom: 16px; }
+.seller-mini-row .av { width: 40px; height: 40px; border-radius: 50%; background: var(--orange-mid); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+.seller-mini-row .si { flex: 1; }
+.seller-mini-row .si h4 { font-size: 14px; font-weight: 700; color: var(--text); display: flex; align-items: center; gap: 4px; }
+.seller-mini-row .si p { font-size: 12px; color: var(--text-3); }
+.follow-btn { background: var(--orange); color: white; border: none; border-radius: 20px; padding: 6px 16px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; }
+.reviews-summary { display: flex; align-items: center; gap: 16px; padding: 14px; background: var(--cream); border-radius: var(--radius-sm); margin-bottom: 12px; }
+.rev-big { font-size: 36px; font-weight: 800; color: var(--text); }
+.rev-bars { flex: 1; }
+.rev-bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 3px; }
+.rev-bar-row span { font-size: 11px; color: var(--text-3); width: 8px; }
+.rev-bar-bg { flex: 1; height: 4px; background: var(--border); border-radius: 2px; }
+.rev-bar-fill { height: 4px; background: var(--orange); border-radius: 2px; }
+.product-footer { padding: 14px 20px 28px; border-top: 1px solid var(--border); display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+.total-price-label { font-size: 12px; color: var(--text-3); }
+.total-price-val { font-size: 18px; font-weight: 800; color: var(--text); }
+.add-cart-btn { flex: 1; }
+
+/* ════════════════════════════════════
+   SCREEN 5 — SELLER PROFILE
+═══════════════════════════════════════ */
+#s-seller { background: var(--white); }
+.seller-top { padding: 52px 20px 20px; }
+.seller-profile-row { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 16px 0; }
+.seller-avatar-lg { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, var(--orange-mid), var(--orange)); display: flex; align-items: center; justify-content: center; font-size: 32px; margin-bottom: 10px; border: 3px solid white; box-shadow: 0 4px 16px rgba(224,123,42,0.3); }
+.seller-profile-row h2 { font-size: 20px; font-weight: 800; color: var(--text); display: flex; align-items: center; gap: 5px; }
+.verified-icon { color: var(--orange); font-size: 16px; }
+.seller-profile-row .role { font-size: 13px; color: var(--text-3); margin: 4px 0 10px; }
+.seller-btns { display: flex; gap: 10px; width: 100%; padding: 0 20px; margin-bottom: 16px; }
+.seller-btns .btn-follow { flex: 1; border: 1.5px solid var(--border); background: white; border-radius: var(--radius-sm); padding: 11px; font-size: 14px; font-weight: 600; cursor: pointer; color: var(--text); font-family: 'Inter', sans-serif; }
+.seller-btns .btn-msg { flex: 1; background: var(--orange); color: white; border: none; border-radius: var(--radius-sm); padding: 11px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; }
+.hygiene-card { margin: 0 20px 16px; background: var(--orange-light); border-radius: var(--radius-sm); padding: 13px 16px; }
+.hygiene-card .hy-title { font-size: 12px; font-weight: 700; color: var(--orange); display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
+.hygiene-card p { font-size: 12px; color: var(--brown-mid); }
+.hygiene-card a { font-size: 12px; color: var(--orange); font-weight: 600; cursor: pointer; text-decoration: none; }
+.story-card { margin: 0 20px 16px; background: var(--cream); border-radius: var(--radius-sm); padding: 14px; }
+.story-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+.story-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; font-style: italic; }
+.horiz-list { display: flex; gap: 12px; padding: 0 20px 16px; overflow-x: auto; scrollbar-width: none; }
+.horiz-list::-webkit-scrollbar { display: none; }
+.horiz-prod { width: 120px; flex-shrink: 0; cursor: pointer; }
+.horiz-prod-img { height: 100px; border-radius: var(--radius-sm); background: var(--cream-dark); display: flex; align-items: center; justify-content: center; font-size: 32px; margin-bottom: 8px; position: relative; overflow: hidden; }
+.horiz-prod-add { position: absolute; bottom: 6px; right: 6px; width: 26px; height: 26px; background: var(--orange); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.horiz-prod-add i { font-size: 14px; color: white; }
+.horiz-prod h5 { font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+.horiz-prod .hp-price { font-size: 13px; font-weight: 700; color: var(--orange); }
+.review-quote-row { display: flex; gap: 10px; padding: 0 20px 16px; overflow-x: auto; scrollbar-width: none; }
+.review-quote-row::-webkit-scrollbar { display: none; }
+.rq-card { width: 200px; flex-shrink: 0; background: var(--cream); border-radius: var(--radius-sm); padding: 12px; }
+.rq-card .rq-stars { font-size: 12px; color: var(--star); margin-bottom: 6px; }
+.rq-card p { font-size: 12px; color: var(--text-2); line-height: 1.5; margin-bottom: 8px; }
+.rq-card .rq-name { font-size: 11px; font-weight: 600; color: var(--text-3); }
+.seller-footer { padding: 12px 20px 28px; border-top: 1px solid var(--border); flex-shrink: 0; }
+.subscribe-btn { width: 100%; background: var(--orange); color: white; border: none; border-radius: var(--radius-sm); padding: 14px; font-size: 15px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-family: 'Inter', sans-serif; }
+
+/* ════════════════════════════════════
+   SCREEN 6 — CHECKOUT
+═══════════════════════════════════════ */
+#s-checkout { background: var(--white); }
+.checkout-header { padding: 52px 20px 16px; border-bottom: 1px solid var(--border); }
+.checkout-header h2 { font-size: 20px; font-weight: 800; }
+.checkout-item { display: flex; align-items: center; gap: 12px; padding: 14px 20px; border-bottom: 1px solid var(--border); }
+.checkout-item-img { width: 56px; height: 56px; border-radius: var(--radius-sm); background: var(--cream-dark); display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
+.checkout-item-info { flex: 1; }
+.checkout-item-info h4 { font-size: 14px; font-weight: 600; color: var(--text); line-height: 1.3; }
+.checkout-item-info .by { font-size: 12px; color: var(--text-3); }
+.checkout-item-info .item-price { font-size: 14px; font-weight: 700; color: var(--text); margin-top: 4px; }
+.qty-ctrl { display: flex; align-items: center; gap: 8px; }
+.qty-btn { width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid var(--border); background: white; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 14px; color: var(--text); }
+.qty-val { font-size: 14px; font-weight: 600; width: 20px; text-align: center; }
+.checkout-section { padding: 16px 20px; border-bottom: 1px solid var(--border); }
+.checkout-section h3 { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 12px; }
+.address-row { display: flex; justify-content: space-between; align-items: flex-start; }
+.address-row .addr { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+.address-row .edit { font-size: 13px; color: var(--orange); font-weight: 600; cursor: pointer; }
+.payment-option { display: flex; align-items: center; gap: 12px; padding: 12px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 10px; cursor: pointer; }
+.payment-option.selected { border-color: var(--orange); background: var(--orange-light); }
+.payment-option i { font-size: 20px; color: var(--text-3); }
+.payment-option.selected i { color: var(--orange); }
+.payment-option span { font-size: 14px; font-weight: 500; flex: 1; }
+.pay-radio { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; }
+.pay-radio.checked { border-color: var(--orange); }
+.pay-radio.checked::after { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--orange); display: block; }
+.total-row { display: flex; justify-content: space-between; font-size: 14px; color: var(--text-2); margin-bottom: 6px; }
+.total-row.grand { font-size: 16px; font-weight: 800; color: var(--text); margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border); }
+.checkout-footer { padding: 14px 20px 28px; flex-shrink: 0; }
+
+/* ════════════════════════════════════
+   SCREEN 7 — ORDERS
+═══════════════════════════════════════ */
+#s-orders { background: var(--cream); }
+.orders-header { padding: 52px 20px 16px; background: var(--white); }
+.orders-header h2 { font-size: 20px; font-weight: 800; }
+.orders-tabs { display: flex; border-bottom: 1px solid var(--border); background: var(--white); }
+.orders-tab { flex: 1; padding: 12px; text-align: center; font-size: 14px; font-weight: 600; color: var(--text-3); cursor: pointer; border-bottom: 2.5px solid transparent; margin-bottom: -1px; }
+.orders-tab.active { color: var(--orange); border-bottom-color: var(--orange); }
+.order-card { background: var(--white); border-radius: var(--radius); margin: 12px 20px 0; padding: 14px; box-shadow: var(--shadow); }
+.order-card-top { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.order-card-img { width: 52px; height: 52px; border-radius: var(--radius-sm); background: var(--cream-dark); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 22px; }
+.order-card-info h4 { font-size: 14px; font-weight: 700; color: var(--text); }
+.order-card-info .oid { font-size: 12px; color: var(--text-3); margin-top: 2px; }
+.order-card-info .seller-name { font-size: 12px; color: var(--text-3); }
+.track-timeline { display: flex; flex-direction: column; gap: 0; margin-bottom: 14px; }
+.track-step { display: flex; gap: 12px; align-items: flex-start; position: relative; }
+.track-dot-col { display: flex; flex-direction: column; align-items: center; }
+.t-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--border); margin-top: 3px; flex-shrink: 0; }
+.t-dot.done { background: var(--orange); }
+.t-dot.active { background: var(--orange); box-shadow: 0 0 0 3px var(--orange-light); }
+.t-line { width: 2px; height: 28px; background: var(--border); margin: 2px 5px; }
+.t-line.done { background: var(--orange); }
+.track-step-text { padding-bottom: 20px; }
+.track-step-text h5 { font-size: 13px; font-weight: 700; color: var(--text); }
+.track-step-text .ts-time { font-size: 11px; color: var(--text-3); margin-top: 1px; }
+.track-btn { width: 100%; background: var(--orange); color: white; border: none; border-radius: var(--radius-sm); padding: 12px; font-size: 14px; font-weight: 700; cursor: pointer; margin-bottom: 10px; font-family: 'Inter', sans-serif; }
+.past-order { background: var(--white); border-radius: var(--radius); margin: 12px 20px 0; padding: 14px; display: flex; align-items: center; gap: 12px; box-shadow: var(--shadow); }
+.past-order-img { width: 48px; height: 48px; border-radius: var(--radius-sm); background: var(--cream-dark); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+.past-order-info { flex: 1; }
+.past-order-info h4 { font-size: 13px; font-weight: 600; }
+.past-order-info .pod { font-size: 12px; color: var(--text-3); margin-top: 2px; }
+.past-order-info .pamt { font-size: 13px; font-weight: 700; color: var(--text); margin-top: 2px; }
+.reorder-btn { background: var(--orange-light); color: var(--orange); border: none; border-radius: 20px; padding: 6px 14px; font-size: 12px; font-weight: 700; cursor: pointer; font-family: 'Inter', sans-serif; }
+
+/* ════════════════════════════════════
+   SCREEN 8 — SELLER DASHBOARD
+═══════════════════════════════════════ */
+#s-dashboard { background: var(--cream); }
+.dash-header { display: flex; align-items: center; justify-content: space-between; padding: 52px 20px 16px; background: var(--white); }
+.dash-header-left { display: flex; align-items: center; gap: 10px; }
+.dash-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--orange-mid); display: flex; align-items: center; justify-content: center; font-size: 18px; }
+.dash-header-left h3 { font-size: 15px; font-weight: 700; }
+.dash-header-left p { font-size: 12px; color: var(--text-3); }
+.earnings-card { margin: 14px 20px; background: var(--orange); border-radius: var(--radius); padding: 18px; color: white; }
+.earnings-card .ec-label { font-size: 11px; font-weight: 700; opacity: 0.85; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; display: flex; align-items: center; justify-content: space-between; }
+.earnings-card .ec-amount { font-size: 30px; font-weight: 800; margin-bottom: 6px; }
+.earnings-card .ec-growth { font-size: 12px; font-weight: 600; opacity: 0.9; display: flex; align-items: center; gap: 4px; }
+.earnings-sub { display: grid; grid-template-columns: 1fr 1px 1fr; gap: 0; margin: 0 20px 14px; background: var(--white); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+.earnings-sub-item { padding: 14px; text-align: center; }
+.earnings-sub-item .esi-val { font-size: 18px; font-weight: 800; color: var(--text); }
+.earnings-sub-item .esi-label { font-size: 11px; color: var(--text-3); margin-top: 2px; }
+.earnings-sub-divider { width: 1px; background: var(--border); }
+.avail-row { display: flex; justify-content: space-between; align-items: center; margin: 0 20px 14px; background: var(--white); border-radius: var(--radius); padding: 12px 16px; box-shadow: var(--shadow); }
+.avail-info .av-label { font-size: 11px; color: var(--text-3); }
+.avail-info .av-amount { font-size: 18px; font-weight: 800; color: var(--text); }
+.withdraw-btn { background: var(--orange); color: white; border: none; border-radius: 20px; padding: 8px 20px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: 'Inter', sans-serif; }
+.dash-order-item { display: flex; align-items: center; gap: 12px; padding: 12px 20px; background: var(--white); border-bottom: 1px solid var(--border); }
+.doi-img { width: 44px; height: 44px; border-radius: var(--radius-xs); background: var(--cream-dark); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+.doi-info { flex: 1; }
+.doi-info h5 { font-size: 13px; font-weight: 600; }
+.doi-info .doi-sub { font-size: 12px; color: var(--text-3); }
+.doi-btns { display: flex; gap: 6px; }
+.doi-btn-ship { background: var(--orange); color: white; border: none; border-radius: 16px; padding: 5px 12px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; }
+.doi-btn-label { background: var(--cream); color: var(--text); border: 1px solid var(--border); border-radius: 16px; padding: 5px 12px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; }
+.prod-inv-item { display: flex; align-items: center; gap: 12px; padding: 12px 20px; background: var(--white); border-bottom: 1px solid var(--border); }
+.pii-img { width: 44px; height: 44px; border-radius: var(--radius-xs); background: var(--cream-dark); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+.pii-info { flex: 1; }
+.pii-info h5 { font-size: 13px; font-weight: 600; }
+.pii-info .pii-sub { font-size: 12px; color: var(--text-3); }
+.toggle { width: 42px; height: 24px; border-radius: 12px; background: var(--orange); position: relative; cursor: pointer; flex-shrink: 0; }
+.toggle::after { content: ''; width: 18px; height: 18px; border-radius: 50%; background: white; position: absolute; top: 3px; right: 3px; transition: right 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+.toggle.off { background: var(--border); }
+.toggle.off::after { right: 21px; }
+.fab { position: fixed; bottom: 90px; right: 28px; width: 52px; height: 52px; background: var(--orange); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 6px 20px rgba(224,123,42,0.5); border: none; z-index: 10; }
+.fab i { font-size: 24px; color: white; }
+
+/* ════════════════════════════════════
+   SCREEN 9 — RATE
+═══════════════════════════════════════ */
+#s-rate { background: var(--white); }
+.rate-header { padding: 52px 20px 16px; border-bottom: 1px solid var(--border); }
+.rate-header h2 { font-size: 20px; font-weight: 800; }
+.rate-product { display: flex; align-items: center; gap: 12px; padding: 14px 20px; border-bottom: 1px solid var(--border); }
+.rate-product-img { width: 56px; height: 56px; border-radius: var(--radius-sm); background: var(--cream-dark); display: flex; align-items: center; justify-content: center; font-size: 24px; }
+.rate-product-info h4 { font-size: 14px; font-weight: 600; }
+.rate-product-info p { font-size: 12px; color: var(--text-3); margin-top: 2px; }
+.rate-section { padding: 18px 20px; border-bottom: 1px solid var(--border); }
+.rate-section h3 { font-size: 15px; font-weight: 700; margin-bottom: 14px; }
+.stars-row { display: flex; gap: 8px; margin-bottom: 8px; }
+.star-btn { font-size: 32px; cursor: pointer; color: #F5A623; }
+.star-label { font-size: 14px; font-weight: 600; color: var(--orange); }
+.review-textarea { width: 100%; border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 13px; font-size: 14px; color: var(--text); font-family: 'Inter', sans-serif; resize: none; min-height: 90px; outline: none; margin-top: 10px; }
+.photo-add { display: flex; align-items: center; gap: 8px; border: 1.5px dashed var(--border); border-radius: var(--radius-sm); padding: 13px; cursor: pointer; color: var(--text-3); font-size: 14px; margin-top: 10px; }
+.appreciation-card { background: var(--orange-light); border-radius: var(--radius-sm); padding: 13px; margin-top: 10px; border-left: 3px solid var(--orange); }
+.appreciation-card h4 { font-size: 13px; font-weight: 700; color: var(--orange); display: flex; align-items: center; gap: 5px; margin-bottom: 6px; }
+.appreciation-card textarea { width: 100%; border: none; background: transparent; font-size: 13px; color: var(--brown-mid); font-family: 'Inter', sans-serif; resize: none; min-height: 60px; outline: none; }
+.priv-note { font-size: 11px; color: var(--text-3); margin-top: 6px; display: flex; align-items: center; gap: 4px; }
+.rate-footer { padding: 14px 20px 28px; border-top: 1px solid var(--border); flex-shrink: 0; }
+
+/* ════════════════════════════════════
+   RESPONSIVE / PHONE LABEL
+═══════════════════════════════════════ */
+.phone-label { text-align: center; color: rgba(255,255,255,0.4); font-size: 12px; margin-top: 14px; letter-spacing: 0.05em; }
+@media (max-width: 500px) {
+  body { padding: 0; align-items: flex-start; }
+  .phone { width: 100vw; height: 100svh; border-radius: 0; }
+  .desktop-nav { top: 12px; font-size: 11px; }
+  .desktop-nav button { padding: 6px 10px; font-size: 11px; }
+  .phone-label { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div>
+  <nav class="desktop-nav" role="navigation" aria-label="Screen navigation">
+    <button class="active" onclick="show('splash')">Splash</button>
+    <button onclick="show('auth')">Login</button>
+    <button onclick="show('home')">Home</button>
+    <button onclick="show('product')">Product</button>
+    <button onclick="show('seller')">Seller</button>
+    <button onclick="show('checkout')">Checkout</button>
+    <button onclick="show('orders')">Orders</button>
+    <button onclick="show('dashboard')">Dashboard</button>
+    <button onclick="show('rate')">Review</button>
+  </nav>
+
+  <div class="phone" role="main">
+
+    <!-- ══ SPLASH ══ -->
+    <div id="s-splash" class="screen active" aria-label="Splash screen">
+      <div class="splash-header">
+        <div class="splash-logo-icon"><i class="ti ti-needle-thread" aria-hidden="true"></i></div>
+        <div class="splash-logo-name">Craftora</div>
+      </div>
+      <div class="splash-hero-img" role="img" aria-label="Artisan kitchen with handmade goods"></div>
+      <div class="splash-headline"><h1>Made by Hands.<br>Made with Heart.</h1></div>
+      <div class="splash-sub">Discover unique artisanal food and handmade crafts from your local community makers.</div>
+      <div class="splash-actions">
+        <button class="btn-primary" onclick="show('auth')">Get Started</button>
+        <button class="btn-outline" onclick="show('auth')">Log In</button>
+      </div>
+    </div>
+
+    <!-- ══ AUTH ══ -->
+    <div id="s-auth" class="screen" aria-label="Authentication screen">
+      <div class="auth-top">
+        <div class="auth-logo-icon"><i class="ti ti-needle-thread" aria-hidden="true"></i></div>
+        <h2>Welcome Home</h2>
+        <p>Experience the warmth of handmade treasures and local flavors.</p>
+      </div>
+      <div class="role-tabs">
+        <div class="role-tab active" onclick="setRole(this)">Buyer</div>
+        <div class="role-tab" onclick="setRole(this)">Seller</div>
+      </div>
+      <div class="auth-form">
+        <div class="method-toggle">
+          <div class="method-btn active" onclick="setMethod(this)"><i class="ti ti-phone" aria-hidden="true"></i> Phone</div>
+          <div class="method-btn" onclick="setMethod(this)"><i class="ti ti-mail" aria-hidden="true"></i> Email</div>
+        </div>
+        <label class="form-label">Phone Number</label>
+        <div class="input-group">
+          <i class="ti ti-phone" aria-hidden="true"></i>
+          <input type="tel" placeholder="+1 (555) 000-0000" aria-label="Phone number" />
+        </div>
+        <button class="btn-primary" onclick="show('home')">Continue to Craftora <i class="ti ti-arrow-right" aria-hidden="true"></i></button>
+        <div class="auth-divider">or login with</div>
+        <div class="social-row">
+          <button class="social-btn" aria-label="Continue with Google"><i class="ti ti-brand-google" aria-hidden="true"></i> Google</button>
+          <button class="social-btn" aria-label="Continue with Apple"><i class="ti ti-brand-apple" aria-hidden="true"></i> Apple</button>
+        </div>
+      </div>
+      <div class="auth-footer">New to the community? <a onclick="show('auth')">Sign Up</a></div>
+      <div class="auth-terms">By signing in, you agree to our <a>Terms of Service</a> and <a>Privacy Policy</a>.</div>
+    </div>
+
+    <!-- ══ HOME ══ -->
+    <div id="s-home" class="screen" aria-label="Home screen">
+      <div class="home-topbar">
+        <div class="location-row">
+          <i class="ti ti-map-pin" style="color:var(--orange);font-size:16px" aria-hidden="true"></i>
+          <div>
+            <span>Shopping near</span>
+            <h3>Hyderabad, IN <i class="ti ti-chevron-down" style="font-size:14px" aria-hidden="true"></i></h3>
+          </div>
+        </div>
+        <button class="notif-btn" aria-label="Notifications"><i class="ti ti-bell" style="font-size:20px;color:var(--text-2)"></i></button>
+      </div>
+      <div class="home-search">
+        <i class="ti ti-search" aria-hidden="true"></i>
+        <input type="search" placeholder="Search handmade food & crafts…" aria-label="Search" />
+        <div class="filter-btn" role="button" aria-label="Filter"><i class="ti ti-adjustments-horizontal" aria-hidden="true"></i></div>
+      </div>
+      <div class="tag-row" role="tablist">
+        <div class="tag active" role="tab" aria-selected="true" onclick="setTag(this)">All</div>
+        <div class="tag" role="tab" onclick="setTag(this)"><i class="ti ti-bowl" aria-hidden="true"></i> Food</div>
+        <div class="tag" role="tab" onclick="setTag(this)">✂ Crafts</div>
+        <div class="tag" role="tab" onclick="setTag(this)">💍 Jewellery</div>
+        <div class="tag" role="tab" onclick="setTag(this)">🏺 Pottery</div>
+      </div>
+      <div class="section-hdr"><h3>Fresh Near You</h3><a onclick="show('home')">See all</a></div>
+      <div class="near-grid">
+        <div class="near-card" onclick="show('product')" role="button" aria-label="Golden Crust Bakery">
+          <div class="near-card-img">
+            <div class="near-card-img-bg" style="background:linear-gradient(135deg,#C4762A,#8B4513);display:flex;align-items:center;justify-content:center;font-size:44px;">🍞</div>
+            <div class="near-card-rating"><i class="ti ti-star" style="color:#F5A623;font-size:11px" aria-hidden="true"></i> 4.9</div>
+            <div style="position:absolute;top:8px;left:8px;background:var(--orange);color:white;font-size:10px;font-weight:700;padding:2px 8px;border-radius:12px;">FOOD</div>
+          </div>
+          <div class="near-card-body">
+            <h4>Golden Crust Bakery</h4>
+            <div class="price">$8.50</div>
+            <div class="meta"><i class="ti ti-clock" aria-hidden="true"></i> 0.8 miles · 15 mins</div>
+          </div>
+        </div>
+        <div class="near-card" onclick="show('seller')" role="button" aria-label="Terra Clay Studio">
+          <div class="near-card-img">
+            <div class="near-card-img-bg" style="background:linear-gradient(135deg,#8B6914,#C4A028);display:flex;align-items:center;justify-content:center;font-size:44px;">🏺</div>
+            <div class="near-card-rating"><i class="ti ti-star" style="color:#F5A623;font-size:11px" aria-hidden="true"></i> 4.7</div>
+            <div style="position:absolute;top:8px;left:8px;background:#5B4A2B;color:white;font-size:10px;font-weight:700;padding:2px 8px;border-radius:12px;">CRAFTS</div>
+          </div>
+          <div class="near-card-body">
+            <h4>Terra Clay Studio</h4>
+            <div class="price">$24.00</div>
+            <div class="meta"><i class="ti ti-map-pin" aria-hidden="true"></i> 1.2 miles · Pickup</div>
+          </div>
+        </div>
+        <div class="near-card" onclick="show('product')" role="button" aria-label="Mama Fatima's Kitchen">
+          <div class="near-card-img">
+            <div class="near-card-img-bg" style="background:linear-gradient(135deg,#8B2500,#C44028);display:flex;align-items:center;justify-content:center;font-size:44px;">🍱</div>
+            <div class="near-card-rating"><i class="ti ti-star" style="color:#F5A623;font-size:11px" aria-hidden="true"></i> 4.8</div>
+            <div style="position:absolute;top:8px;left:8px;background:var(--orange);color:white;font-size:10px;font-weight:700;padding:2px 8px;border-radius:12px;">FOOD</div>
+          </div>
+          <div class="near-card-body">
+            <h4>Mama Fatima's Kitchen</h4>
+            <div class="price">₹180</div>
+            <div class="meta"><i class="ti ti-clock" aria-hidden="true"></i> 0.5 miles · 20 mins</div>
+          </div>
+        </div>
+      </div>
+      <div class="section-hdr"><h3>Top Rated Producers</h3><a onclick="show('home')">See all</a></div>
+      <div class="rated-list">
+        <div class="rated-item" onclick="show('product')" role="button" aria-label="Pure Wildflower Honey">
+          <div class="rated-img" style="background:#FDF0C0;">🍯</div>
+          <div class="rated-info">
+            <h4>Pure Wildflower Honey</h4>
+            <div class="sub">Local Bee Farm, Queens</div>
+            <div class="stars"><i class="ti ti-star-filled star" aria-hidden="true"></i> 5.0 (128 reviews)</div>
+          </div>
+          <div>
+            <div class="rated-price">$12.00</div>
+            <button class="heart-btn" aria-label="Add to wishlist"><i class="ti ti-heart"></i></button>
+          </div>
+        </div>
+        <div class="rated-item" onclick="show('product')" role="button" aria-label="Soy Wax Candle Set">
+          <div class="rated-img" style="background:#F0EAE0;">🕯</div>
+          <div class="rated-info">
+            <h4>Soy Wax Candle Set</h4>
+            <div class="sub">Amber & Glow Crafts</div>
+            <div class="stars"><i class="ti ti-star-filled star" aria-hidden="true"></i> 4.9 (84 reviews)</div>
+          </div>
+          <div>
+            <div class="rated-price">$18.50</div>
+            <button class="heart-btn" aria-label="Add to wishlist"><i class="ti ti-heart"></i></button>
+          </div>
+        </div>
+        <div class="rated-item" onclick="show('product')" role="button" aria-label="Signature Macaron Box">
+          <div class="rated-img" style="background:#FDE8F0;">🍬</div>
+          <div class="rated-info">
+            <h4>Signature Macaron Box</h4>
+            <div class="sub">Le Petit Kitchen</div>
+            <div class="stars"><i class="ti ti-star-filled star" aria-hidden="true"></i> 4.7 (210 reviews)</div>
+          </div>
+          <div>
+            <div class="rated-price">$22.00</div>
+            <button class="heart-btn" aria-label="Add to wishlist"><i class="ti ti-heart"></i></button>
+          </div>
+        </div>
+        <div style="height:8px"></div>
+      </div>
+      <div class="bottom-nav">
+        <button class="bnav active" onclick="show('home')" aria-label="Home"><i class="ti ti-home"></i><span>Home</span></button>
+        <button class="bnav" onclick="show('home')" aria-label="Explore"><i class="ti ti-compass"></i><span>Explore</span></button>
+        <button class="bnav-cart" onclick="show('checkout')" aria-label="Cart"><i class="ti ti-shopping-cart"></i></button>
+        <button class="bnav" onclick="show('home')" aria-label="Favorites"><i class="ti ti-heart"></i><span>Saved</span></button>
+        <button class="bnav" onclick="show('dashboard')" aria-label="Profile"><i class="ti ti-user"></i><span>Profile</span></button>
+      </div>
+    </div>
+
+    <!-- ══ PRODUCT ══ -->
+    <div id="s-product" class="screen" aria-label="Product detail screen">
+      <div class="product-hero" style="background:linear-gradient(160deg,#F5E0C0,#E8C898);" role="img" aria-label="Organic Sourdough Loaf">
+        <span style="font-size:90px">🍞</span>
+        <div class="product-actions-top">
+          <button class="back-btn" onclick="show('home')" aria-label="Back"><i class="ti ti-arrow-left"></i></button>
+          <div style="display:flex;gap:8px">
+            <button class="back-btn" aria-label="Share"><i class="ti ti-share"></i></button>
+            <button class="back-btn" aria-label="Wishlist"><i class="ti ti-heart"></i></button>
+          </div>
+        </div>
+        <div class="product-dots">
+          <div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        </div>
+      </div>
+      <div class="product-body">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:4px">
+          <h2>Organic Sourdough Loaf</h2>
+        </div>
+        <div class="product-meta">
+          <i class="ti ti-star-filled star" aria-hidden="true"></i>
+          <span style="font-size:13px;font-weight:600">4.8</span>
+          <span style="font-size:13px;color:var(--text-3)">(124 reviews)</span>
+        </div>
+        <div class="product-price">$12.00</div>
+        <div style="height:14px"></div>
+        <div class="process-card">
+          <div class="proc-title"><i class="ti ti-leaf" aria-hidden="true"></i> Handmade Process</div>
+          <p>"Our sourdough is fermented for a full 24 hours using only three ingredients: stone-ground heritage flour, filtered mountain water, and a 10-year-old active starter. Every loaf is hand-shaped and baked in small batches to ensure a perfect, crackling crust."</p>
+        </div>
+        <div class="ing-title">Ingredients & Materials</div>
+        <div class="ing-grid">
+          <div class="ing-chip">Organic Wheat Flour</div>
+          <div class="ing-chip">Sea Salt</div>
+          <div class="ing-chip">Wild Yeast</div>
+          <div class="ing-chip">Pure Spring Water</div>
+        </div>
+        <div class="seller-mini-row">
+          <div class="av">👩</div>
+          <div class="si">
+            <h4>Elena's Hearth <i class="ti ti-rosette-discount-check verified-icon" aria-hidden="true"></i></h4>
+            <p>Master Baker · 5.0 Rating</p>
+          </div>
+          <button class="follow-btn" onclick="show('seller')">Follow</button>
+        </div>
+        <div class="reviews-summary">
+          <div class="rev-big">4.9</div>
+          <div class="rev-bars">
+            <div class="rev-bar-row"><span>5</span><div class="rev-bar-bg"><div class="rev-bar-fill" style="width:90%"></div></div></div>
+            <div class="rev-bar-row"><span>4</span><div class="rev-bar-bg"><div class="rev-bar-fill" style="width:6%"></div></div></div>
+            <div class="rev-bar-row"><span>3</span><div class="rev-bar-bg"><div class="rev-bar-fill" style="width:2%"></div></div></div>
+            <div class="rev-bar-row"><span>2</span><div class="rev-bar-bg"><div class="rev-bar-fill" style="width:1%"></div></div></div>
+            <div class="rev-bar-row"><span>1</span><div class="rev-bar-bg"><div class="rev-bar-fill" style="width:1%"></div></div></div>
+          </div>
+          <div style="text-align:right"><div style="font-size:13px;color:var(--text-3)">120 reviews</div></div>
+        </div>
+      </div>
+      <div class="product-footer">
+        <div>
+          <div class="total-price-label">Total price</div>
+          <div class="total-price-val">$12.00</div>
+        </div>
+        <div class="add-cart-btn">
+          <button class="btn-primary" onclick="show('checkout')"><i class="ti ti-shopping-cart" aria-hidden="true"></i> Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SELLER PROFILE ══ -->
+    <div id="s-seller" class="screen" aria-label="Artisan seller profile">
+      <div class="seller-top">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+          <button class="back-btn" onclick="show('home')" aria-label="Back"><i class="ti ti-arrow-left"></i></button>
+          <button class="back-btn" aria-label="Share"><i class="ti ti-share"></i></button>
+        </div>
+        <div class="seller-profile-row">
+          <div class="seller-avatar-lg">👩</div>
+          <h2>Clara's Hearth <i class="ti ti-rosette-discount-check verified-icon" aria-hidden="true"></i></h2>
+          <div class="role">Master Baker · 248 Sales · Asheville, NC</div>
+          <div style="display:flex;gap:8px">
+            <span class="badge-orange"><i class="ti ti-star-filled" aria-hidden="true"></i> 5.0</span>
+          </div>
+        </div>
+      </div>
+      <div class="seller-btns">
+        <button class="btn-follow">Follow</button>
+        <button class="btn-msg">Message</button>
+      </div>
+      <div class="hygiene-card">
+        <div class="hy-title"><i class="ti ti-shield-check" aria-hidden="true"></i> Hygiene Declaration</div>
+        <p>Grade A certified kitchen & food safety standards met. &nbsp;<a>View Certificate ›</a></p>
+      </div>
+      <div class="story-card">
+        <h4>Community Story</h4>
+        <p>"I started Clara's Hearth with a single wooden paddle and a dream to bring slow-fermented, stone-ground bread back to our neighbors. Every loaf uses local grains from the Miller family farm, milled just three miles away."</p>
+      </div>
+      <div class="section-hdr"><h3>Handmade Today</h3><a>View All</a></div>
+      <div class="horiz-list">
+        <div class="horiz-prod" onclick="show('product')">
+          <div class="horiz-prod-img" style="background:#F5E0C0">🍞<div class="horiz-prod-add"><i class="ti ti-plus" aria-hidden="true"></i></div></div>
+          <h5>Classic Sourdough</h5>
+          <div class="hp-price">$9.50</div>
+        </div>
+        <div class="horiz-prod" onclick="show('product')">
+          <div class="horiz-prod-img" style="background:#F0E8D0">🥐<div class="horiz-prod-add"><i class="ti ti-plus" aria-hidden="true"></i></div></div>
+          <h5>Cinnamon Whirls</h5>
+          <div class="hp-price">$12.00</div>
+        </div>
+        <div class="horiz-prod" onclick="show('product')">
+          <div class="horiz-prod-img" style="background:#E8F0D0">🌿<div class="horiz-prod-add"><i class="ti ti-plus" aria-hidden="true"></i></div></div>
+          <h5>Herb Focaccia</h5>
+          <div class="hp-price">$10.00</div>
+        </div>
+      </div>
+      <div class="section-hdr"><h3>What Neighbors Say</h3></div>
+      <div class="review-quote-row">
+        <div class="rq-card">
+          <div class="rq-stars">★★★★★</div>
+          <p>"The crust on the sourdough is perfection. It reminds me of the bread I had in Paris, but even better because it's local."</p>
+          <div class="rq-name">— Sarah M.</div>
+        </div>
+        <div class="rq-card">
+          <div class="rq-stars">★★★★★</div>
+          <p>"Those cinnamon whirls are legendary. Kind and thoughtful seller too — will definitely reorder!"</p>
+          <div class="rq-name">— James K.</div>
+        </div>
+      </div>
+      <div style="height:8px"></div>
+      <div class="seller-footer">
+        <button class="subscribe-btn" onclick="show('checkout')"><i class="ti ti-repeat" aria-hidden="true"></i> Subscribe to Weekly Box</button>
+      </div>
+    </div>
+
+    <!-- ══ CHECKOUT ══ -->
+    <div id="s-checkout" class="screen" aria-label="Checkout screen">
+      <div class="checkout-header">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+          <button class="back-btn" onclick="show('product')" aria-label="Back"><i class="ti ti-arrow-left"></i></button>
+          <h2>Checkout</h2>
+        </div>
+        <div style="font-size:14px;font-weight:700;color:var(--text)">Order Summary</div>
+      </div>
+      <div class="checkout-item">
+        <div class="checkout-item-img">🏺</div>
+        <div class="checkout-item-info">
+          <h4>Handmade Ceramic…</h4>
+          <div class="by">by Potter's Hand</div>
+          <div class="item-price">$24.00</div>
+        </div>
+        <div class="qty-ctrl">
+          <button class="qty-btn" aria-label="Decrease">−</button>
+          <span class="qty-val">1</span>
+          <button class="qty-btn" aria-label="Increase">+</button>
+        </div>
+      </div>
+      <div class="checkout-item">
+        <div class="checkout-item-img">🍯</div>
+        <div class="checkout-item-info">
+          <h4>Organic Honey Jar</h4>
+          <div class="by">by BeeWild</div>
+          <div class="item-price">$18.00</div>
+        </div>
+        <div class="qty-ctrl">
+          <button class="qty-btn" aria-label="Decrease">−</button>
+          <span class="qty-val">2</span>
+          <button class="qty-btn" aria-label="Increase">+</button>
+        </div>
+      </div>
+      <div class="checkout-section">
+        <h3>Delivery Address</h3>
+        <div class="address-row">
+          <div class="addr">
+            <div style="font-weight:600;color:var(--text);margin-bottom:3px">Sarah Jenkins</div>
+            402 Artisans Lane, Studio 4B<br>Brooklyn, NY 11211<br>+1 (555) 123-4567
+          </div>
+          <div class="edit">Edit</div>
+        </div>
+      </div>
+      <div class="checkout-section">
+        <h3>Payment Method</h3>
+        <div class="payment-option selected" role="radio" aria-checked="true">
+          <i class="ti ti-device-mobile" aria-hidden="true"></i>
+          <span>UPI (GPay, PhonePe)</span>
+          <div class="pay-radio checked"></div>
+        </div>
+        <div class="payment-option" role="radio" aria-checked="false">
+          <i class="ti ti-credit-card" aria-hidden="true"></i>
+          <span>Credit / Debit Card</span>
+          <div class="pay-radio"></div>
+        </div>
+      </div>
+      <div class="checkout-section">
+        <div class="total-row"><span>Subtotal (3 items)</span><span>$60.00</span></div>
+        <div class="total-row"><span>Delivery Fee</span><span style="color:var(--green);font-weight:600">FREE</span></div>
+        <div class="total-row grand"><span>Total Amount</span><span>$60.00</span></div>
+      </div>
+      <div class="checkout-footer">
+        <button class="btn-primary" onclick="show('orders')">Place Order <i class="ti ti-lock" aria-hidden="true"></i></button>
+      </div>
+    </div>
+
+    <!-- ══ ORDERS ══ -->
+    <div id="s-orders" class="screen" aria-label="My orders screen">
+      <div class="orders-header">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <h2>My Orders</h2>
+          <button class="notif-btn" aria-label="Back to home" onclick="show('home')"><i class="ti ti-x" style="font-size:16px;color:var(--text-2)"></i></button>
+        </div>
+      </div>
+      <div class="orders-tabs">
+        <div class="orders-tab active" role="tab">Active</div>
+        <div class="orders-tab" role="tab">Past</div>
+      </div>
+      <div class="order-card">
+        <div style="display:flex;justify-content:space-between;margin-bottom:12px">
+          <div>
+            <div style="font-size:12px;color:var(--text-3)">Arriving in 12 mins</div>
+            <div style="font-size:14px;font-weight:700">Order #HM-9241</div>
+            <div style="font-size:12px;color:var(--text-3)">Artisan Bakery & Co.</div>
+          </div>
+          <div style="width:52px;height:52px;border-radius:var(--radius-sm);background:var(--cream-dark);display:flex;align-items:center;justify-content:center;font-size:22px">🍞</div>
+        </div>
+        <div class="track-timeline">
+          <div class="track-step">
+            <div class="track-dot-col"><div class="t-dot done"></div><div class="t-line done"></div></div>
+            <div class="track-step-text"><h5>Order Placed</h5><div class="ts-time">11:05 AM</div></div>
+          </div>
+          <div class="track-step">
+            <div class="track-dot-col"><div class="t-dot done"></div><div class="t-line done"></div></div>
+            <div class="track-step-text"><h5>Preparing Your Food</h5><div class="ts-time">11:30 AM</div></div>
+          </div>
+          <div class="track-step">
+            <div class="track-dot-col"><div class="t-dot active"></div><div class="t-line"></div></div>
+            <div class="track-step-text"><h5 style="color:var(--orange)">Out for Delivery</h5><div class="ts-time">In transit · 2.4 mi away</div></div>
+          </div>
+          <div class="track-step">
+            <div class="track-dot-col"><div class="t-dot"></div></div>
+            <div class="track-step-text"><h5 style="color:var(--text-3)">Arrived</h5></div>
+          </div>
+        </div>
+        <button class="track-btn" aria-label="Track order">Track Order</button>
+        <div style="text-align:center"><a style="font-size:13px;color:var(--orange);cursor:pointer;font-weight:600">View Details</a></div>
+      </div>
+      <div class="order-card" style="margin-top:12px">
+        <div style="font-size:13px;font-weight:600;color:var(--text-3);margin-bottom:10px">Ready tomorrow</div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+          <div>
+            <div style="font-size:14px;font-weight:700">Order #HM-8812</div>
+            <div style="font-size:12px;color:var(--text-3)">The Potter's Wheel</div>
+          </div>
+          <div style="width:48px;height:48px;border-radius:var(--radius-sm);background:var(--cream-dark);display:flex;align-items:center;justify-content:center;font-size:20px">🏺</div>
+        </div>
+        <div style="font-size:13px;color:var(--text-2);margin-bottom:10px">Order Placed: Yesterday, 4:15 PM<br><span style="color:var(--orange);font-weight:600">Crafting in Progress</span> — Artisan is working on your piece</div>
+        <div style="font-size:13px;font-weight:700;color:var(--green);margin-bottom:10px">✓ Packed & Ready</div>
+      </div>
+      <div class="section-hdr" style="margin-top:4px"><h3>Recent Past Orders</h3></div>
+      <div class="past-order">
+        <div class="past-order-img">🍯</div>
+        <div class="past-order-info">
+          <h4>Mama's Jam Box</h4>
+          <div class="pod">Delivered Oct 24, 2023</div>
+          <div class="pamt">$24.00</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <button class="reorder-btn" onclick="show('checkout')">Reorder</button>
+          <button style="background:transparent;border:none;color:var(--text-3);font-size:12px;cursor:pointer;font-family:'Inter',sans-serif" onclick="show('rate')">Rate</button>
+        </div>
+      </div>
+      <div style="text-align:center;padding:16px;font-size:13px">Need help? <a style="color:var(--orange);font-weight:600;cursor:pointer">Contact Support</a></div>
+      <div class="bottom-nav">
+        <button class="bnav" onclick="show('home')" aria-label="Home"><i class="ti ti-home"></i><span>Home</span></button>
+        <button class="bnav" onclick="show('home')" aria-label="Explore"><i class="ti ti-compass"></i><span>Explore</span></button>
+        <button class="bnav-cart" onclick="show('checkout')" aria-label="Cart"><i class="ti ti-shopping-cart"></i></button>
+        <button class="bnav active" onclick="show('orders')" aria-label="Orders"><i class="ti ti-package"></i><span>Orders</span></button>
+        <button class="bnav" onclick="show('dashboard')" aria-label="Profile"><i class="ti ti-user"></i><span>Profile</span></button>
+      </div>
+    </div>
+
+    <!-- ══ SELLER DASHBOARD ══ -->
+    <div id="s-dashboard" class="screen" aria-label="Seller dashboard">
+      <div class="dash-header">
+        <div class="dash-header-left">
+          <div class="dash-avatar">👩</div>
+          <div>
+            <h3>Seller Dashboard</h3>
+            <p>Craftora Artisan Store</p>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="notif-btn" aria-label="Search"><i class="ti ti-search" style="font-size:18px;color:var(--text-2)"></i></button>
+          <button class="notif-btn" aria-label="Notifications"><i class="ti ti-bell" style="font-size:18px;color:var(--text-2)"></i></button>
+        </div>
+      </div>
+      <div class="earnings-card">
+        <div class="ec-label">
+          <span>Total Revenue</span>
+          <i class="ti ti-chart-bar" style="font-size:16px" aria-hidden="true"></i>
+        </div>
+        <div class="ec-amount">$3,842.50</div>
+        <div class="ec-growth"><i class="ti ti-trending-up" aria-hidden="true"></i> +12.4% · Payment scheduled: Oct 18</div>
+      </div>
+      <div class="earnings-sub">
+        <div class="earnings-sub-item">
+          <div class="esi-val">1,458 <span style="font-size:12px;color:var(--green)">▲</span></div>
+          <div class="esi-label">Visits</div>
+        </div>
+        <div class="earnings-sub-divider"></div>
+        <div class="earnings-sub-item">
+          <div class="esi-val">4.2% <span style="font-size:12px;color:var(--green)">▲</span></div>
+          <div class="esi-label">Conv. Rate</div>
+        </div>
+      </div>
+      <div class="avail-row">
+        <div class="avail-info">
+          <div class="av-label">Available to withdraw</div>
+          <div class="av-amount">$820.00</div>
+        </div>
+        <button class="withdraw-btn">Withdraw</button>
+      </div>
+      <div class="section-hdr"><h3>Today's Orders</h3><a style="font-size:12px;color:var(--orange);font-weight:600">3 Pending</a></div>
+      <div style="background:var(--white);border-radius:var(--radius);margin:0 20px;overflow:hidden;box-shadow:var(--shadow)">
+        <div class="dash-order-item">
+          <div class="doi-img">🍞</div>
+          <div class="doi-info">
+            <h5>Order #4592</h5>
+            <div class="doi-sub">Sourdough Bread (2x)</div>
+          </div>
+          <div>
+            <div class="badge-orange" style="margin-bottom:6px">NEW</div>
+            <div class="doi-btns">
+              <button class="doi-btn-ship" onclick="show('orders')">Accept & Ship</button>
+            </div>
+          </div>
+        </div>
+        <div style="height:1px;background:var(--border);margin:0 14px"></div>
+        <div class="dash-order-item">
+          <div class="doi-img">🏺</div>
+          <div class="doi-info">
+            <h5>Order #4595</h5>
+            <div class="doi-sub">Blue Glaze Mug — $24.00</div>
+          </div>
+          <div>
+            <div class="badge-green" style="margin-bottom:6px">PAID</div>
+            <div class="doi-btns">
+              <button class="doi-btn-label">Print Label</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="section-hdr"><h3>Product Inventory</h3><a>Filter</a></div>
+      <div style="background:var(--white);border-radius:var(--radius);margin:0 20px 80px;overflow:hidden;box-shadow:var(--shadow)">
+        <div class="prod-inv-item">
+          <div class="pii-img">🍯</div>
+          <div class="pii-info">
+            <h5>Wildflower Honey</h5>
+            <div class="pii-sub">24 in stock · $12.00</div>
+          </div>
+          <div class="toggle"></div>
+        </div>
+        <div style="height:1px;background:var(--border);margin:0 14px"></div>
+        <div class="prod-inv-item">
+          <div class="pii-img">🕯</div>
+          <div class="pii-info">
+            <h5>Beeswax Candles</h5>
+            <div class="pii-sub">8 in stock · $15.00</div>
+          </div>
+          <div class="toggle"></div>
+        </div>
+        <div style="height:1px;background:var(--border);margin:0 14px"></div>
+        <div class="prod-inv-item">
+          <div class="pii-img">🧴</div>
+          <div class="pii-info">
+            <h5>Lavender Bath Salts</h5>
+            <div class="pii-sub" style="color:var(--red)">SOLD OUT · $15.00</div>
+          </div>
+          <div class="toggle off"></div>
+        </div>
+      </div>
+      <div class="bottom-nav">
+        <button class="bnav active" onclick="show('dashboard')" aria-label="Dashboard"><i class="ti ti-layout-dashboard"></i><span>Dashboard</span></button>
+        <button class="bnav" onclick="show('orders')" aria-label="Orders"><i class="ti ti-shopping-bag"></i><span>Orders</span></button>
+        <button class="bnav-cart" aria-label="Add product" onclick="alert('Add new product')"><i class="ti ti-plus"></i></button>
+        <button class="bnav" aria-label="Insights"><i class="ti ti-chart-line"></i><span>Insights</span></button>
+        <button class="bnav" onclick="show('seller')" aria-label="Store"><i class="ti ti-store"></i><span>Store</span></button>
+      </div>
+    </div>
+
+    <!-- ══ RATE ══ -->
+    <div id="s-rate" class="screen" aria-label="Rate your experience screen">
+      <div class="rate-header">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+          <button class="back-btn" onclick="show('orders')" aria-label="Back"><i class="ti ti-arrow-left"></i></button>
+          <h2>Rate Your Experience</h2>
+        </div>
+        <div style="font-size:13px;color:var(--text-3)">Your feedback helps our community grow.</div>
+      </div>
+      <div class="rate-product">
+        <div class="rate-product-img">🏺</div>
+        <div class="rate-product-info">
+          <h4>Blue Glaze Ceramic Mug</h4>
+          <p>Crafted by Earth & Fire Studio</p>
+        </div>
+      </div>
+      <div class="rate-section">
+        <h3>Overall Rating</h3>
+        <div class="stars-row" role="group" aria-label="Star rating">
+          <span class="star-btn" role="radio" aria-checked="false">★</span>
+          <span class="star-btn" role="radio" aria-checked="false">★</span>
+          <span class="star-btn" role="radio" aria-checked="true">★</span>
+          <span class="star-btn" role="radio" aria-checked="false">★</span>
+          <span class="star-btn" role="radio" aria-checked="false">☆</span>
+        </div>
+        <div class="star-label">Very Good</div>
+      </div>
+      <div class="rate-section">
+        <h3>Public Review</h3>
+        <textarea class="review-textarea" placeholder="The glaze is even more beautiful in person. It feels great to hold…" aria-label="Write your review">The glaze is even more beautiful in person. It feels great to hold…</textarea>
+        <div class="photo-add" role="button" aria-label="Add photos">
+          <i class="ti ti-camera" aria-hidden="true"></i> Add Photos
+        </div>
+      </div>
+      <div class="rate-section">
+        <div class="appreciation-card">
+          <h4><i class="ti ti-heart" aria-hidden="true"></i> Appreciation Message</h4>
+          <textarea aria-label="Private note to artisan">Thank you for the quick shipping and the handwritten note!</textarea>
+          <div class="priv-note"><i class="ti ti-lock" style="font-size:11px" aria-hidden="true"></i> This message is only visible to the seller</div>
+        </div>
+      </div>
+      <div class="rate-footer">
+        <button class="btn-primary" onclick="show('home')">Post Review <i class="ti ti-arrow-right" aria-hidden="true"></i></button>
+        <div style="text-align:center;margin-top:10px;font-size:11px;color:var(--text-3)">By posting, you agree to our Community Guidelines</div>
+      </div>
+    </div>
+
+  </div><!-- /phone -->
+  <div class="phone-label">Tap any nav button to switch screens · All screens interactive</div>
+</div>
+
+<script>
+function show(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.desktop-nav button').forEach(b => b.classList.remove('active'));
+  const scr = document.getElementById('s-' + name);
+  if (scr) { scr.classList.remove('active'); void scr.offsetWidth; scr.classList.add('active'); scr.scrollTop = 0; }
+  const map = { splash:'Splash', auth:'Login', home:'Home', product:'Product', seller:'Seller', checkout:'Checkout', orders:'Orders', dashboard:'Dashboard', rate:'Review' };
+  document.querySelectorAll('.desktop-nav button').forEach(b => { if (b.textContent.trim() === map[name]) b.classList.add('active'); });
+}
+function setRole(el) { document.querySelectorAll('.role-tab').forEach(t => t.classList.remove('active')); el.classList.add('active'); }
+function setMethod(el) { document.querySelectorAll('.method-btn').forEach(t => t.classList.remove('active')); el.classList.add('active'); }
+function setTag(el) { document.querySelectorAll('.tag').forEach(t => t.classList.remove('active')); el.classList.add('active'); }
+</script>
+</body>
+</html>
